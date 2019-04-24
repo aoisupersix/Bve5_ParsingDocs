@@ -4,8 +4,9 @@
       "src": [
         {
           "files": [
-            "../Bve5_Parsing"
-          ]
+            "**.cs"
+          ],
+          "src": "../Bve5_Parsing/Bve5_Parsing"
         }
       ],
       "dest": "api",
@@ -47,11 +48,11 @@
         ],
         "exclude": [
           "obj/**",
-          "_site/**"
+          "../Docs/**"
         ]
       }
     ],
-    "dest": "_site",
+    "dest": "../Docs",
     "globalMetadataFiles": [],
     "fileMetadataFiles": [],
     "template": [
