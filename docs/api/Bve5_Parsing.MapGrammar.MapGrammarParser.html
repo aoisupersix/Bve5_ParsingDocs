@@ -73,7 +73,7 @@
   
   <h1 id="Bve5_Parsing_MapGrammar_MapGrammarParser" data-uid="Bve5_Parsing.MapGrammar.MapGrammarParser" class="text-break">Class MapGrammarParser
   </h1>
-  <div class="markdown level0 summary"><p>MapGrammarの解析を行うクラス</p>
+  <div class="markdown level0 summary"><p>マップファイルのパースを行います。</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
@@ -117,7 +117,7 @@
   
   <a id="Bve5_Parsing_MapGrammar_MapGrammarParser__ctor_" data-uid="Bve5_Parsing.MapGrammar.MapGrammarParser.#ctor*"></a>
   <h4 id="Bve5_Parsing_MapGrammar_MapGrammarParser__ctor" data-uid="Bve5_Parsing.MapGrammar.MapGrammarParser.#ctor">MapGrammarParser()</h4>
-  <div class="markdown level1 summary"><p>構文解析器を初期化します。</p>
+  <div class="markdown level1 summary"><p>パーサを初期化します。</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -129,7 +129,8 @@
   
   
   <h4 id="Bve5_Parsing_MapGrammar_MapGrammarParser__parserError" data-uid="Bve5_Parsing.MapGrammar.MapGrammarParser._parserError">_parserError</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>ParserErrorsプロパティの内部実装。</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -156,7 +157,8 @@
   
   <a id="Bve5_Parsing_MapGrammar_MapGrammarParser_ErrorListener_" data-uid="Bve5_Parsing.MapGrammar.MapGrammarParser.ErrorListener*"></a>
   <h4 id="Bve5_Parsing_MapGrammar_MapGrammarParser_ErrorListener" data-uid="Bve5_Parsing.MapGrammar.MapGrammarParser.ErrorListener">ErrorListener</h4>
-  <div class="markdown level1 summary"><p>構文解析のエラーを取得するリスナー</p>
+  <div class="markdown level1 summary"><p>構文解析のエラーを取得するするためのリスナーです。
+エラーに対して独自の処理を行いたい場合は、このプロパティにParseErrorListenerを継承した独自のクラスを指定してください。</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -182,7 +184,8 @@
   
   <a id="Bve5_Parsing_MapGrammar_MapGrammarParser_ParserErrors_" data-uid="Bve5_Parsing.MapGrammar.MapGrammarParser.ParserErrors*"></a>
   <h4 id="Bve5_Parsing_MapGrammar_MapGrammarParser_ParserErrors" data-uid="Bve5_Parsing.MapGrammar.MapGrammarParser.ParserErrors">ParserErrors</h4>
-  <div class="markdown level1 summary"><p>構文解析エラー</p>
+  <div class="markdown level1 summary"><p>パーサで保持しているエラーです。
+Parse()やParseToAst()を呼び出しパースを行う度に初期化されます。</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -208,7 +211,8 @@
   
   <a id="Bve5_Parsing_MapGrammar_MapGrammarParser_Store_" data-uid="Bve5_Parsing.MapGrammar.MapGrammarParser.Store*"></a>
   <h4 id="Bve5_Parsing_MapGrammar_MapGrammarParser_Store" data-uid="Bve5_Parsing.MapGrammar.MapGrammarParser.Store">Store</h4>
-  <div class="markdown level1 summary"><p>マップ構文の変数管理用</p>
+  <div class="markdown level1 summary"><p>マップ構文内の変数を保持します。
+変数はパースの度に初期化されません。</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -527,7 +531,7 @@ Item1にバージョン情報、Item2にエンコーディング、Item3にス�
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public MapGrammarAstNodes ParseToAst(string input, string filePath, string versionString = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public MapGrammarAstNodes ParseToAst(string input, string filePath = null, string versionString = null)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">

@@ -73,7 +73,9 @@
   
   <h1 id="Bve5_Parsing_MapGrammar_EvaluateData_Statement" data-uid="Bve5_Parsing.MapGrammar.EvaluateData.Statement" class="text-break">Class Statement
   </h1>
-  <div class="markdown level0 summary"><p>ステートメントのベースクラス</p>
+  <div class="markdown level0 summary"><p>マップファイルのステートメントを表します。
+各ステートメントは構文ごとにこのクラスを継承して定義されています。
+各構文のキーや引数は、各構文のステートメントを表すクラスにキャストすることで取得できます。</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
@@ -181,7 +183,8 @@
   
   <a id="Bve5_Parsing_MapGrammar_EvaluateData_Statement__ctor_" data-uid="Bve5_Parsing.MapGrammar.EvaluateData.Statement.#ctor*"></a>
   <h4 id="Bve5_Parsing_MapGrammar_EvaluateData_Statement__ctor" data-uid="Bve5_Parsing.MapGrammar.EvaluateData.Statement.#ctor">Statement()</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>新しいステートメントを生成します。</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -191,7 +194,8 @@
   
   <a id="Bve5_Parsing_MapGrammar_EvaluateData_Statement__ctor_" data-uid="Bve5_Parsing.MapGrammar.EvaluateData.Statement.#ctor*"></a>
   <h4 id="Bve5_Parsing_MapGrammar_EvaluateData_Statement__ctor_System_Double_" data-uid="Bve5_Parsing.MapGrammar.EvaluateData.Statement.#ctor(System.Double)">Statement(Double)</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>距離程を指定して新しいステートメントを生成します。</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -210,7 +214,8 @@
       <tr>
         <td><span class="xref">System.Double</span></td>
         <td><span class="parametername">distance</span></td>
-        <td></td>
+        <td><p>距離程</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -406,7 +411,7 @@
   
   <a id="Bve5_Parsing_MapGrammar_EvaluateData_Statement_GetAllArguments_" data-uid="Bve5_Parsing.MapGrammar.EvaluateData.Statement.GetAllArguments*"></a>
   <h4 id="Bve5_Parsing_MapGrammar_EvaluateData_Statement_GetAllArguments" data-uid="Bve5_Parsing.MapGrammar.EvaluateData.Statement.GetAllArguments">GetAllArguments()</h4>
-  <div class="markdown level1 summary"><p>すべての引数を取得します。</p>
+  <div class="markdown level1 summary"><p>全引数の属性を取得します。</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -432,7 +437,7 @@
   
   <a id="Bve5_Parsing_MapGrammar_EvaluateData_Statement_ToSyntaxData_" data-uid="Bve5_Parsing.MapGrammar.EvaluateData.Statement.ToSyntaxData*"></a>
   <h4 id="Bve5_Parsing_MapGrammar_EvaluateData_Statement_ToSyntaxData" data-uid="Bve5_Parsing.MapGrammar.EvaluateData.Statement.ToSyntaxData">ToSyntaxData()</h4>
-  <div class="markdown level1 summary"><p>StatementからSyntaxDataを生成して返します。</p>
+  <div class="markdown level1 summary"><p>ステートメントからSyntaxDataを生成して返します。</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
