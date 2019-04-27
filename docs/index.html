@@ -5,9 +5,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>This is the HOMEPAGE. </title>
+    <title>Bve5_Parsing </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="This is the HOMEPAGE. ">
+    <meta name="title" content="Bve5_Parsing ">
     <meta name="generator" content="docfx 2.42.1.0">
     
     <link rel="shortcut icon" href="favicon.ico">
@@ -60,13 +60,119 @@
         <div class="article row grid">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-<h1 id="this-is-the-homepage">This is the <strong>HOMEPAGE</strong>.</h1>
 
-<p>Refer to <a href="http://daringfireball.net/projects/markdown/">Markdown</a> for how to write markdown files.</p>
-<h2 id="quick-start-notes">Quick Start Notes:</h2>
+<p><a href="https://travis-ci.org/aoisupersix/Bve5_Parsing"><img src="https://travis-ci.org/aoisupersix/Bve5_Parsing.svg?branch=master" alt="Build Status"></a>
+<a href="#contributors"><img src="https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square" alt="All Contributors"></a>
+<a href="https://badge.fury.io/nu/Bve5_Parsing"><img src="https://badge.fury.io/nu/Bve5_Parsing.svg" alt="NuGet version"></a>
+<a href="/License.md"><img src="http://img.shields.io/badge/license-MIT-blue.svg?style=flat" alt="MIT License"></a></p>
+<h1 id="bve5_parsing">Bve5_Parsing</h1>
+<p>BveTrainSim5構文の.NETパーサライブラリです。
+入力された文字列やファイルを解析し、プログラム上で利用しやすい形式に変換します。
+現在マップファイルとシナリオファイル構文に対応しています。</p>
+<h2 id="supported-syntaxes">Supported Syntaxes</h2>
+<ul>
+<li><h4 id="scenario-file">Scenario File</h4>
+<ul>
+<li>Bve5の全構文に対応</li>
+</ul>
+</li>
+<li><h4 id="map-file">Map File</h4>
+<ul>
+<li>マップファイルのバージョン1.00から2.02に対応。</li>
+<li>数式や変数、Includeディレクティブにも対応しています。</li>
+</ul>
+</li>
+</ul>
+<p>その他は今後作っていきます👍</p>
+<h2 id="requirements">Requirements</h2>
+<ul>
+<li>.Net Standard 2.0 or .Net framework 4.0</li>
+</ul>
+<h2 id="installation">Installation</h2>
+<p>Nugetで<a href="https://www.nuget.org/packages/Bve5_Parsing/">Bve5_Parsing</a>としてパッケージを公開しています。</p>
+<ul>
+<li><p>コマンドラインからインストールする場合</p>
+<pre><code>nuget install Bve5_Parsing
+</code></pre>
+</li>
+<li><p>VisualStudioからインストールする場合</p>
 <ol>
-<li>Add images to the <em>images</em> folder if the file is referencing an image.</li>
+<li>ツール &gt; Nugetパッケージマネージャ &gt; ソリューションのNugetパッケージの管理をクリック</li>
+<li>参照タブで<code>Bve5_Parsing</code>を検索</li>
+<li>インストールをクリック</li>
 </ol>
+</li>
+</ul>
+<h2 id="usage-for-c">Usage for C#</h2>
+<p>C#でマップファイルのパースを行う場合</p>
+<pre><code class="lang-csharp">using Bve5_Parsing.MapGrammar;
+using Bve5_Parsing.MapGrammar.EvaluateData;
+using System.Linq;
+
+...
+    string input; //String to be analyzed
+    MapGrammarParser parser = new MapGrammarParser();
+
+    // 文字列をマップ構文としてパースする
+    MapData mapData = parser.Parse(input);
+    // マップファイルへのファイルパスを指定してパースする
+    MapData mapData2 = parser.ParseFromFile(@&quot;PATH/TO/MAP/FILE&quot;);
+    // Include構文の参照先を再帰的にパースする
+    MapData mapDataWithInclude = parser.ParseFromFile(@&quot;PATH/TO/MAP/FILE&quot;, MapGrammarParserOption.ParseIncludeSyntaxRecursively)
+    // AST(抽象構文木)にパースする
+    MapData ast = parser.ParseToAst(input, @&quot;PATH/TO/FILE/PATH&quot;);
+
+    // パースエラーの取得
+    if (parser.ParseErrors.Any()) {
+      // error handling
+    }
+
+    // 旧形式でステートメントのデータを取得する場合（通常は必要ありません）
+    var syntaxData = mapData.Statements.Select(state =&gt; state.ToSyntaxData());
+
+    mapData.Version //マップ構文のバージョン情報
+    mapData.Encoding // マップ構文のエンコーディング指定
+    foreach(var statement in mapData.Statements) {
+      /* 各構文情報 */
+      statement.Distance; //構文の距離程
+      statement.FunctionName; //構文の関数名
+    }
+...
+</code></pre>
+<p>パース処理に成功した場合、結果は<strong>MapDataクラス</strong>で返ってきます。例えば、ファイルヘッダのバージョン情報は<strong>MapData.Version</strong>に格納されています。また、構文解析のエラーは<strong>MapGrammarParser.ParserErrors</strong>に格納されています。<strong>MapGrammarParser.ParserErrors</strong>ではエラーの種別(警告かエラーか)やエラーとなった構文の位置、エラーメッセージが取得出来ます。独自のエラーメッセージを実装する場合は、<strong>ParserErrorListener</strong>を継承したカスタムクラスを実装し、<strong>MapGrammarParser.ErrorListener</strong>に指定して下さい。</p>
+<p>Bve5_Parsing.slnに含まれているParseSampleAppプロジェクトからは、コンソール上でパーサの動作を確かめることができます。Bve5_Parsingの実装例として適宜利用して下さい。</p>
+<h2 id="used-librarys">Used Librarys</h2>
+<p>Bve5_Parsing is using the following library.</p>
+<h4 id="antlr-v4"><a href="http://www.antlr.org/index.html">ANTLR v4</a></h4>
+<blockquote>
+<p>The BSD License (3-clause BSD License)</p>
+<p>Copyright (c) 2012 Terence Parr and Sam Harwell</p>
+</blockquote>
+<ul>
+<li><strong>ライセンス全文 :</strong> <a href="/Licenses/ANTLR4.txt">ANTLR4ライセンス全文</a></li>
+</ul>
+<h4 id="readjenc"><a href="https://github.com/hnx8/ReadJEnc">ReadJEnc</a></h4>
+<blockquote>
+<p>The MIT License (MIT)</p>
+<p>Copyright (c) 2017 hnx8</p>
+</blockquote>
+<ul>
+<li><strong>ライセンス全文 ：</strong> <a href="https://github.com/hnx8/ReadJEnc/blob/master/LICENSE">ReadJEncライセンス全文</a></li>
+</ul>
+<h2 id="license">License</h2>
+<p>The MIT License (MIT)</p>
+<p>Copyright(c) 2017-2019 aoisupersix</p>
+<p><strong><a href="License.md">License.md</a></strong></p>
+<h2 id="technicalcommentary">TechnicalCommentary</h2>
+<p>Bve5_Parsingの技術解説です。<br>
+-&gt; <a href="TechnicalCommentary.md">TechnicalCommentary.md</a></p>
+<h2 id="contributors">Contributors</h2>
+<p>Thanks goes to these wonderful people (<a href="https://allcontributors.org/docs/en/emoji-key">emoji key</a>):</p>
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore -->
+<table><tr><td align="center"><a href="https://aoisupersix.tokyo/"><img src="https://avatars0.githubusercontent.com/u/17172912?v=4" width="100px;" alt="Aoi Tanaka"><br><sub><b>Aoi Tanaka</b></sub></a><br><a href="https://github.com/aoisupersix/Bve5_Parsing/commits?author=aoisupersix" title="Code">💻</a></td><td align="center"><a href="https://twitter.com/S520_BVE"><img src="https://avatars3.githubusercontent.com/u/29241703?v=4" width="100px;" alt="s520"><br><sub><b>s520</b></sub></a><br><a href="https://github.com/aoisupersix/Bve5_Parsing/commits?author=s520" title="Code">💻</a></td></tr></table>
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+<p>This project follows the <a href="https://github.com/all-contributors/all-contributors">all-contributors</a> specification. Contributions of any kind welcome!</p>
 </article>
           </div>
           
@@ -74,6 +180,9 @@
             <div class="sideaffix">
               <div class="contribution">
                 <ul class="nav">
+                  <li>
+                    <a href="https://github.com/aoisupersix/Bve5_ParsingDocs/blob/master/bve5_parsing_doc/index.md/#L1" class="contribution-link">Improve this Doc</a>
+                  </li>
                 </ul>
               </div>
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
